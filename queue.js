@@ -83,53 +83,68 @@ class queue {
         }
     }
 }
-// let testqueue = new queue();
-// testqueue.enqueue('data')
-// testqueue.enqueue('qqq')
-// testqueue.enqueue('data')
-// testqueue.enqueue('daaaata')
-// testqueue.print()
-// console.log('################### after reverse:')
-// testqueue.reverse()
-// testqueue.print()
-function reverseEvenNum(head,prev = null) {
-    let cur,temp;
+
+function reverseEvenNum(head, prev) {
+    let cur, temp;
     cur = head;
-    if(head === null) return null;
-    while(cur && cur.data % 2 === 0){
+    if (head === null) return null;
+    // only execute one
+    while (cur && cur.data % 2 === 0) {
         temp = cur.next;
         cur.next = prev
         prev = cur;
+        // this only print even numbers
         cur = temp;
     }
-    if(cur !== null){
-        console.log(cur === head,cur.data,head.data)
+    // cur is already at the end
+    if(head != cur){
+        head.next = cur;
+        cur =  (cur,null)
+        return prev
     }
-    if (cur != head)  
-    { 
-        head.next = cur; 
-        // Recur for the remaining linked list 
-        cur = reverseEvenNum(cur, null); 
-        return prev; 
-    }else{
+    else{
+        //iterate over the odd number
         head.next = reverseEvenNum(head.next,head);
-        return head
     }
+    
+  
 }
-
+function printer(head){
+    let cur = head;
+    while(cur){
+        console.log(cur.data)
+        cur = cur.next;
+    }
+    return
+}
 let intqueue = new queue();
-// for (let i = 0; i < 10; i++) {
-//     intqueue.enqueue(i * 2)
-// }
+/**
+ * reverse :
+prev -> (
+    2
+    4 <- head
+)
+cur -> (3,20,6,8,7,10)
++when the first two element got reversed:
+while(cur !=head) 
+    head.next = cur;
+    cur = reverse(cur,null);
+    return prev
+prev - > (2,4, 3 <- cur pointer ) * because 3 is not even number so the current pointer stop there
+ */
+
 intqueue.enqueue(4)
 intqueue.enqueue(2)
+// freezed becuze 3 is not even num
+intqueue.enqueue(10) 
 intqueue.enqueue(3)
 intqueue.enqueue(6)
 intqueue.enqueue(8)
+//paired
 intqueue.enqueue(7)
 intqueue.enqueue(10)
 
-
-console.log(intqueue)
+intqueue.print()
+console.log('#########rv#######')
 let ouu = reverseEvenNum(intqueue.head);
-console.log(ouu)
+printer(ouu)
